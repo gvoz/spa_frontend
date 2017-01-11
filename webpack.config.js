@@ -23,22 +23,14 @@ module.exports = {
     module: {
       loaders: [
         {
-          loader : 'babel-loader',
-          include : PATHS.src,
-          test : /\.jsx?$/,
-          query : {
-            presets : ["es2015", "react"]
-          }
+          test: /\.css$/,
+          loader: 'style!css',
+          include: PATHS.src
         },
         {
-            loader: 'style!css',
-            include: PATHS.src,
-            test: /\.css$/
-        },
-        {
+          test: /\.jsx?$/,
           loaders: ['react-hot', 'babel'],
-          include: PATHS.src,
-          test: /\.js$/
+          include: PATHS.src
         }
       ]
     }
