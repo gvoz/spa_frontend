@@ -5,4 +5,5 @@ class PostForm extends React.Component {
     return <div>Добавление записи запрещено</div>;
   }
 }
+
 export default PostForm;
