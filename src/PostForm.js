@@ -3,7 +3,7 @@ import React from 'react';
 class PostForm extends React.Component {
   constructor(props){
     super(props)
-    this.state = {username: '', date: new Date().toLocaleDateString(), title: '', body: ''}
+    this.state = {username: '', date: '', title: '', body: ''}
   }
 
   handleUsernameChange(e) {
@@ -35,7 +35,7 @@ class PostForm extends React.Component {
       return response.json()
     }
 
-    fetch('http://localhost:3000/api/posts/', {
+    fetch(process.env['SITE'] + '/api/posts/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -47,7 +47,7 @@ class PostForm extends React.Component {
     .then(parseJSON)
     .then(response => {
       this.props.onPostSubmit(post);
-      this.setState({username: '', date: new Date().toLocaleDateString(), title: '', body: ''})
+      this.setState({username: '', date: '', title: '', body: ''})
     })
     .catch(error => {
       console.log('Request failed', error);
@@ -61,7 +61,7 @@ class PostForm extends React.Component {
     var title = this.state.title;
     var body = this.state.body;
 
-    if (!username || !title || !body || !date) {
+    if (!username || !title || !body) {
       return;
     }
 

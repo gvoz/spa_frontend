@@ -1,7 +1,8 @@
 import React from 'react';
 import Post from './Post';
 import PostForm from './PostForm';
-import 'whatwg-fetch'
+import 'whatwg-fetch';
+require ('./env');
 
 class App extends React.Component {
 
@@ -19,7 +20,7 @@ class App extends React.Component {
       return response.json()
     }
 
-    fetch('http://localhost:3000/api/posts/')
+    fetch(process.env['SITE'] + '/api/posts/')
     .then(checkStatus)
     .then(parseJSON)
     .then(response => {
