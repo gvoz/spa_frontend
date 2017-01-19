@@ -9,6 +9,7 @@ const PATHS = {
 module.exports = {
     devtool: 'eval',
     entry: [
+      'whatwg-fetch',
       'webpack-hot-middleware/client?reload=true',
       './src/index'
     ],
