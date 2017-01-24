@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "6.9.4"
-script: npm run build
+
 deploy:
   provider: s3
   access_key_id: $AWS_ACCESS_KEY_ID
