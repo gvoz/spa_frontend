@@ -3,4 +3,5 @@ npm-debug.log
 build
 .rvmrc
 nodesource_setup.sh
-src/env.js
+public/index.js
+public/index.js.map

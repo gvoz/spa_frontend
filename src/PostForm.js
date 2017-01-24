@@ -35,7 +35,7 @@ class PostForm extends React.Component {
       return response.json()
     }
 
-    fetch(process.env['SITE'] + '/api/posts/', {
+    fetch(process.env['BACKEND_SERVER'] + '/api/posts/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
