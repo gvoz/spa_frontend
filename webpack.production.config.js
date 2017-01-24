@@ -7,10 +7,8 @@ const PATHS = {
 };
 
 module.exports = {
-    devtool: 'eval',
+    devtool: 'source-map',
     entry: [
-      'whatwg-fetch',
-      'webpack-hot-middleware/client?reload=true',
       './src/index'
     ],
     output: {
@@ -19,19 +17,15 @@ module.exports = {
       publicPath: '/'
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
       'process.env': {
+        'NODE_ENV': JSON.stringify('production'),
         'BACKEND_SERVER': JSON.stringify('http://35.157.80.187')
       }
-    })],
+    })
+    ],
     module: {
       loaders: [
-        {
-          test: /\.css$/,
-          loader: 'style!css',
-          include: PATHS.src
-        },
         {
           test: /\.jsx?$/,
           loaders: ['react-hot', 'babel'],
