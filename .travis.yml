@@ -8,4 +8,5 @@ deploy:
   secret_access_key: $AWS_SECRET_ACCESS_KEY
   bucket: "spa2017"
   region: 'eu-central-1'
+  local_dir: public
   skip_cleanup: true

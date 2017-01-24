@@ -1,18 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
 
-const PATHS = {
-  src: path.join (__dirname, 'src'),
-  build : path.join (__dirname, 'build')
-};
-
 module.exports = {
     devtool: 'source-map',
     entry: [
       './src/index'
     ],
     output: {
-      path: PATHS.build,
+      path: path.join (__dirname, 'public')
       filename: "index.js",
       publicPath: '/'
     },
@@ -29,7 +24,7 @@ module.exports = {
         {
           test: /\.jsx?$/,
           loaders: ['react-hot', 'babel'],
-          include: PATHS.src
+          include: path.join (__dirname, 'src')
         }
       ]
     }
