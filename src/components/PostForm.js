@@ -22,6 +22,10 @@ class PostForm extends React.Component {
     this.setState({body: e.target.value});
   }
 
+  handleTestClick(e) {
+    this.props.onTestClick(this.state);
+  }
+
   sendPost(post){
     function checkStatus(response) {
       if (response.status >= 200 && response.status < 300) {
@@ -117,6 +121,7 @@ class PostForm extends React.Component {
             value="Add post"
           />
         </form>
+        <button className="btn btn-default" onClick={this.handleTestClick.bind(this)}>Test</button>
       </div>
     );
   }

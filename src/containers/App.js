@@ -1,6 +1,9 @@
 import React from 'react';
-import Post from './Post';
-import PostForm from './PostForm';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import Post from '../components/Post';
+import PostForm from '../components/PostForm';
+import * as PostActions from '../actions/PostActions'
 import 'whatwg-fetch';
 
 class App extends React.Component {
@@ -41,19 +44,35 @@ class App extends React.Component {
   }
 
   render() {
+    const { addPost } = this.props.PostActions
+
     return (
-      <div  className="row">
-        <div className="col-md-6">
-          {this.state && this.state.posts.map(post => {
-            return (
-              <Post key={post.id} data = {post} />
+      <div>
+        <div className="row">
+          <div className="col-md-6">
+            {this.state && this.state.posts.map(post => {
+              return (
+                <Post key={post.id} data = {post} />
+              )}
             )}
-          )}
+          </div>
+          <PostForm onPostSubmit={this.handlePostSubmit.bind(this)} onTestClick={addPost}/>
         </div>
-        <PostForm onPostSubmit={this.handlePostSubmit.bind(this)} />
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    post: state.post
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    PostActions: bindActionCreators(PostActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
