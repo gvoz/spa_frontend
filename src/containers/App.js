@@ -9,16 +9,14 @@ import 'whatwg-fetch';
 class App extends React.Component {
 
   componentDidMount() {
-    this.props.PostActions.fetchPosts();
+    this.props.fetchPosts();
   }
 
   handlePostSubmit() {
-    this.props.PostActions.fetchPosts();
+    this.props.fetchPosts();
   }
 
   render() {
-    const { addPost } = this.props.PostActions
-
     return (
       <div>
         <div className="row">
@@ -29,7 +27,7 @@ class App extends React.Component {
               )}
             )}
           </div>
-          <PostForm onPostSubmit={this.handlePostSubmit.bind(this)} onTestClick={addPost}/>
+          <PostForm onPostSubmit={this.handlePostSubmit.bind(this)} />
         </div>
       </div>
     );
@@ -43,9 +41,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    PostActions: bindActionCreators(PostActions, dispatch)
-  }
+  return bindActionCreators(PostActions, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
