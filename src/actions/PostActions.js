@@ -7,20 +7,6 @@ export function getPosts(posts) {
   }
 }
 
-export function addPost(post) {
-  return {
-    type: types.ADD_POST,
-    payload: post
-  }
-}
-
-export function removePost(id) {
-  return {
-    type: types.REMOVE_POST,
-    payload: id
-  }
-}
-
 export function fetchPosts() {
   return dispatch => {
     fetch(process.env['BACKEND_SERVER'] + '/api/posts/')
@@ -29,7 +15,7 @@ export function fetchPosts() {
   }
 }
 
-export function fetchAddPost(post) {
+export function addPost(post) {
   return dispatch => {
     fetch(process.env['BACKEND_SERVER'] + '/api/posts/', {
       method: 'POST',
@@ -39,17 +25,24 @@ export function fetchAddPost(post) {
       },
       body: JSON.stringify(post)
     })
-    .then(response => response.json())
-    .then(post => dispatch(addPost(post)))
+    .then(response => {
+      if(response.ok) {
+        dispatch(fetchPosts())
+      }
+    })
   }
 }
 
-export function fetchRemovePost(id) {
+export function removePost(id) {
   const url = process.env['BACKEND_SERVER'] + '/api/posts/' + id
   return dispatch => {
     fetch(url, {
       method: 'DELETE'
     })
-    .then(dispatch(removePost(id)))
+    .then(response => {
+      if(response.ok) {
+        dispatch(fetchPosts())
+      }
+    })
   }
 }

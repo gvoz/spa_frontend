@@ -10,6 +10,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.fetchPosts();
+    this.timerID = setInterval(this.props.fetchPosts(), this.props.pollInterval);
   }
 
   handlePostSubmit() {
@@ -17,17 +18,18 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <div className="row">
           <div className="col-md-6">
             {this.props.posts.map(post => {
               return (
-                <Post key={post.id} data = {post} />
+               <Post key={post.id} id={post.id} username={post.username} date={post.date} title={post.title} body={post.body} removePost={this.props.removePost} />
               )}
             )}
           </div>
-          <PostForm onPostSubmit={this.handlePostSubmit.bind(this)} />
+          <PostForm onPostSubmit={this.props.addPost} />
         </div>
       </div>
     );
