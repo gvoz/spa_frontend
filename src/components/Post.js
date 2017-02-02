@@ -2,24 +2,16 @@ import React from 'react';
 
 class Post extends React.Component {
   render() {
-    if (this.props.data.date != null) {
-      var date = new Date(this.props.data.date)
-      return (
-        <div className="panel panel-default">
-          <div className="panel-heading">{date.toLocaleDateString()}: {this.props.data.title}</div>
-          <div className="panel-body">{this.props.data.body}</div>
-          <div className="panel-footer">{this.props.data.username}</div>
+    var date = new Date(this.props.date)
+    return (
+      <div className="panel panel-default">
+        <div className="panel-heading">{date.toLocaleDateString()}: {this.props.title}
+        <button onClick={() => this.props.removePost(this.props.id)} className="btn btn-danger pull-right btn-sm">Remove</button>
         </div>
-      )
-    } else {
-      return (
-        <div className="panel panel-default">
-          <div className="panel-heading">{this.props.data.title}</div>
-          <div className="panel-body">{this.props.data.body}</div>
-          <div className="panel-footer">{this.props.data.username}</div>
-        </div>
-      )
-    }
+        <div className="panel-body">{this.props.body}</div>
+        <div className="panel-footer">{this.props.username}</div>
+      </div>
+    )
   }
 }
 

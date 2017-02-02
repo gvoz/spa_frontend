@@ -8,55 +8,28 @@ import 'whatwg-fetch';
 
 class App extends React.Component {
 
-  loadPostsFromServer() {
-
-    function checkStatus(response) {
-      if (response.status >= 200 && response.status < 300) {
-        return Promise.resolve(response)
-      } else {
-        return Promise.reject(new Error(response.statusText))
-      }
-    }
-
-    function parseJSON(response) {
-      return response.json()
-    }
-
-    fetch(process.env['BACKEND_SERVER'] + '/api/posts/')
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(response => {
-      this.setState({posts: response})
-    })
-  }
-
   componentDidMount() {
-    this.loadPostsFromServer();
-    this.timerID = setInterval(this.loadPostsFromServer.bind(this), this.props.pollInterval);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
+    this.props.fetchPosts();
+    this.timerID = setInterval(this.props.fetchPosts(), this.props.pollInterval);
   }
 
   handlePostSubmit() {
-    this.loadPostsFromServer();
+    this.props.fetchPosts();
   }
 
   render() {
-    const { addPost } = this.props.PostActions
 
     return (
       <div>
         <div className="row">
           <div className="col-md-6">
-            {this.state && this.state.posts.map(post => {
+            {this.props.posts.map(post => {
               return (
-                <Post key={post.id} data = {post} />
+               <Post key={post.id} id={post.id} username={post.username} date={post.date} title={post.title} body={post.body} removePost={this.props.removePost} />
               )}
             )}
           </div>
-          <PostForm onPostSubmit={this.handlePostSubmit.bind(this)} onTestClick={addPost}/>
+          <PostForm onPostSubmit={this.props.addPost} />
         </div>
       </div>
     );
@@ -65,14 +38,12 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    post: state.post
+    posts: state.postsReducer.posts
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    PostActions: bindActionCreators(PostActions, dispatch)
-  }
+  return bindActionCreators(PostActions, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

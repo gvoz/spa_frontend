@@ -8,7 +8,7 @@ const store = configureStore()
 
 ReactDOM.render(
   <Provider store={store}>
-    <App pollInterval={10000} />
+    <App />
   </Provider>,
   document.getElementById('root')
 );
