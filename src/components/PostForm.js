@@ -1,13 +1,27 @@
 import React from 'react';
 
 class PostForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {submitAllowed: false}
+    this.handleChangeInput = this.handleChangeInput.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChangeInput () {
+    let allowed = false
+    if (this.refs.username.value.trim() && this.refs.title.value.trim() && this.refs.body.value.trim()) {
+      allowed = true
+    }
+    this.setState({submitAllowed: allowed})
+  }
 
   handleSubmit(e){
     e.preventDefault();
-    var username = this.refs.username.value;
-    var date = this.refs.date.value;
-    var title = this.refs.title.value;
-    var body = this.refs.body.value;
+    var username = this.refs.username.value.trim();
+    var date = this.refs.date.value.trim();
+    var title = this.refs.title.value.trim();
+    var body = this.refs.body.value.trim();
 
     if (!username || !title || !body) {
       return;
@@ -25,6 +39,7 @@ class PostForm extends React.Component {
     this.refs.date.value = '';
     this.refs.title.value = '';
     this.refs.body.value = '';
+    this.setState({submitAllowed: false})
   }
 
   render() {
@@ -36,6 +51,7 @@ class PostForm extends React.Component {
               type="text"
               placeholder="Username"
               ref="username"
+              onChange={this.handleChangeInput}
             />
           </div>
           <div className="form-group">
@@ -50,6 +66,7 @@ class PostForm extends React.Component {
               type="text"
               placeholder="Title"
               ref="title"
+              onChange={this.handleChangeInput}
             />
           </div>
           <div className="form-group">
@@ -57,11 +74,12 @@ class PostForm extends React.Component {
               type="text"
               placeholder="Body"
               ref="body"
+              onChange={this.handleChangeInput}
             />
           </div>
           <input
             type="submit"
-            className="btn btn-primary"
+            className={ "btn btn-primary" + (this.state.submitAllowed ? '' : ' disabled') }
             value="Add post"
           />
         </form>
