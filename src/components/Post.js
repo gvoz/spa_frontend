@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router'
 
 class Post extends React.Component {
   render() {
     var date = new Date(this.props.date)
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">{date.toLocaleDateString()}: {this.props.title}
+        <div className="panel-heading">{date.toLocaleDateString()}: <Link to={"/posts/" + this.props.id}>{this.props.title}</Link>
         <button onClick={() => this.props.removePost(this.props.id)} className="btn btn-danger pull-right btn-sm">Remove</button>
         </div>
         <div className="panel-body">{this.props.body}</div>
